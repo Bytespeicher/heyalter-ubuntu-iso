@@ -37,15 +37,12 @@ d-i	clock-setup/ntp-server string ntp.ubuntu.com
 ## The Debian installer will install on the first disk it finds which can
 ## sometimes be the USB stick itself. Work around this by rolling our own auto
 ## detect logic which disallows installing on USB devices.
-# TODO: how to partition / where to mount additional hard drives
  
 # NOTE: 
 # grep '0 disk$' filters all usb devices (hotplug=1) and all non-disk volumes
 # sort moves ssds (rota=0) before hdds(rota=1), thus prefering ssds
 d-i partman/early_command string \
-  lsblk -do rota,path,hotplug,type; \
-  BOOTDEV="$(lsblk -dno rota,path,hotplug,type|tr -s ' '|sed 's/^ *//g'|grep '0 disk$'|sort|head -n1)"; \
-  echo "Bootdev new: $BOOTDEV"; \
+  BOOTDEV="$(lsblk -dno rota,path,hotplug,type | grep '0 disk$' | sort | awk '{ print $2 }' | head -n1)"; \
   debconf-set partman-auto/disk "$BOOTDEV"; \
   debconf-set grub-installer/bootdev "$BOOTDEV";
 #  while /bin/true; do sleep 0.01; rm -f /target/etc/grub.d/30_os-prober; done &
