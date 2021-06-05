@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2021-05-07
+### Added
+- The ISO now prefers non rotating media (e.g. SSDs and similar) for the installation
+
 ## 2021-05-25
 ### Added
 - Added curl,gparted,youtube-dl packets and HEY-HILFE-Support-Handbuch.pdf (moved from /opt/setup to Desktop with cleanup.sh)
