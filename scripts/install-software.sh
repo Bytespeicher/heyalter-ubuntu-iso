@@ -17,11 +17,18 @@ fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" add-apt-repository -y restricted
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get update -y
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get remove -y cheese
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y default-jre geogebra gimp vlc mumble keepass2 audacity geany obs-studio openscad krita krita-l10n vim pwgen sl neovim curl youtube-dl gparted telegram-desktop inkscape guvcview ksnip
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y language-pack-gnome-uk hunspell-uk
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y language-pack-gnome-ru hunspell-ru
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get clean
 
-
+# Install packages that are missing despite the apt install step with check-language-support
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y hunspell-en-au hunspell-en-ca hunspell-en-gb hunspell-en-za hyphen-en-ca hyphen-en-gb libreoffice-help-en-gb libreoffice-l10n-en-gb libreoffice-l10n-en-za mythes-de-ch mythes-en-au hunspell-en-ca hunspell-en-gb hunspell-en-za hyphen-en-ca hyphen-en-gb libreoffice-help-en-gb libreoffice-l10n-en-gb libreoffice-l10n-en-za mythes-de-ch mythes-en-au
+# Install russian base packages
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y gnome-user-docs-ru hunspell-ru hyphen-ru language-pack-gnome-ru language-pack-gnome-ru-base language-pack-ru language-pack-ru-base libreoffice-help-ru libreoffice-l10n-ru mythes-ru thunderbird-locale-ru
+# Install ukrainian base packages
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y gnome-user-docs-uk hunspell-uk hyphen-uk language-pack-gnome-uk language-pack-gnome-uk-base language-pack-uk language-pack-uk-base
+# Ask check-language-support to install packages not covered above
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y language-selector-common
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=uk)
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=ru)
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support)
 log "Fixing broken symlinks"
 FULL_SQFS_EXTRACTED_DIR=`realpath $SQUASHFS_EXTRACTED_DIR`
 fixsymlinks() {
