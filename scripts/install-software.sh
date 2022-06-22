@@ -29,6 +29,7 @@ fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y language-selector
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=uk)
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=ru)
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support)
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get clean
 log "Fixing broken symlinks"
 FULL_SQFS_EXTRACTED_DIR=`realpath $SQUASHFS_EXTRACTED_DIR`
 fixsymlinks() {
