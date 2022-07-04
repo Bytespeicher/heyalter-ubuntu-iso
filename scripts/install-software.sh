@@ -26,9 +26,9 @@ fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y gnome-user-docs-r
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y gnome-user-docs-uk hunspell-uk hyphen-uk language-pack-gnome-uk language-pack-gnome-uk-base language-pack-uk language-pack-uk-base
 # Ask check-language-support to install packages not covered above
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y language-selector-common
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install --reinstall -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=uk)
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install --reinstall -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=ru)
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install --reinstall -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support)
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=uk)
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support --language=ru)
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y $(fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" check-language-support)
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get clean
 log "Fixing broken symlinks"
 FULL_SQFS_EXTRACTED_DIR=`realpath $SQUASHFS_EXTRACTED_DIR`
