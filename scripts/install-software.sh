@@ -16,7 +16,7 @@ fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" add-apt-repository -y multiverse
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" add-apt-repository -y restricted
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get update -y
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get remove -y cheese
-fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y default-jre geogebra gimp vlc mumble keepass2 audacity geany obs-studio openscad krita krita-l10n vim pwgen sl neovim curl youtube-dl gparted telegram-desktop inkscape guvcview ksnip
+fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y default-jre geogebra vlc mumble keepass2 audacity geany obs-studio krita krita-l10n vim pwgen sl curl youtube-dl gparted telegram-desktop inkscape guvcview ksnip
 
 # Install packages that are missing despite the apt install step with check-language-support
 fakechroot chroot "$SQUASHFS_EXTRACTED_DIR" apt-get install -y hunspell-en-au hunspell-en-ca hunspell-en-gb hunspell-en-za hyphen-en-ca hyphen-en-gb libreoffice-help-en-gb libreoffice-l10n-en-gb libreoffice-l10n-en-za mythes-de-ch mythes-en-au hunspell-en-ca hunspell-en-gb hunspell-en-za hyphen-en-ca hyphen-en-gb libreoffice-help-en-gb libreoffice-l10n-en-gb libreoffice-l10n-en-za mythes-de-ch mythes-en-au
