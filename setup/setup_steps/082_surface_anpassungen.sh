@@ -28,8 +28,8 @@ EOD
 # Anderer Bildschirmhintergrund
 #
 
-  gsettings set  org.gnome.desktop.background picture-uri file:///opt/heyalter/surface_los_gehts.png
-  gsettings set  org.gnome.desktop.background picture-uri-dark file:///opt/heyalter/surface_los_gehts.png
+  gsettings set  org.gnome.desktop.background picture-uri file:///opt/heyalter/surface_los_gehts.svg
+  gsettings set  org.gnome.desktop.background picture-uri-dark file:///opt/heyalter/surface_los_gehts.svg
 
   zenity --info --text "Microsoft Surface erkannt. Mit rechter Maustaste auf den Bildschirmhintergrund klicken, [Anzeigeeinstellungen] wählen und Skalieren auf 100% ändern"
 
