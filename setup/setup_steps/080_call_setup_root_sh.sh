@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+BINDIR="/opt/setup"
+#
+# Update usw. soll in Terminal laufen mit root-Rechten
+#
 
-# Rechte der kopierten Dateien fixen
-gnome-terminal --wait -- bash -c "sudo /opt/setup/setuproot.sh"
+gnome-terminal --wait -- $BINDIR/setup_steps/update.installation $BINDIR
