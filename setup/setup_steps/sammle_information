@@ -1,0 +1,54 @@
+#!/bin/bash
+
+#
+# script to gather as much info as possible
+#
+
+REPLY=$1
+
+# setup temp dir
+   
+DIR=$(mktemp -d)
+cd "$DIR"
+nr=$REPLY"_"$(date +%s)
+mkdir "$nr"
+
+set -v
+
+#
+# list all and everything
+#
+
+lsblk -J -O > "$nr/lsblk.json"
+lspci -xxxx -k > "$nr/lspci.dump"
+lsusb -vv > "$nr/lsusb.txt"
+lscpu -J > "$nr/cpu.json"
+lshw -json > "$nr/lshw.json"
+lsmem -a -b -J > "$nr/lsmem.json"
+lsblk -a -f -m -p -t -J > "$nr/lsblk.json"
+
+dmidecode --dump-bin "$nr/dmidecode.dump"
+
+lsmod > "$nr/lsmod.txt"
+uname -a > "$nr/uname.txt"
+dpkg -l > "$nr/packages.txt"
+
+# 
+
+for dev in $(find /dev/disk/by-path -mindepth 1 ! -name '*part*')
+do
+    hdparm -I "$dev" > "$nr/hdparm.$(basename $dev)"
+done
+   
+cd /sys/class
+   
+# true, because the command always fails due to filesystem loop
+   
+find power_supply/ -depth -follow -maxdepth 2 -type f -exec cp -L --parents {} "$DIR/$nr" \; || true
+
+#
+# now send it home & cleanup
+#
+cd "$DIR"
+sftp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -r specs@set.up <<< "put $nr specs/"
+rm -R "$DIR"
