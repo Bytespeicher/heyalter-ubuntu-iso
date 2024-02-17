@@ -1,0 +1,102 @@
+#!/bin/bash
+# 
+# Wird aufgerufen von 080_call_setup_root_sh.sh
+#
+# 3 Abschnitte: 
+#
+# 1. Update der Pakete vom Proxy oder Internet
+# 2. Aufräumen von /etc/alternatives
+# 3. Installation der Snaps (lokal)
+#
+# Parameter: BINDIR 
+#
+
+BINDIR=$1
+
+if [ $UID -ne 0 ]; then
+   sudo $0 $BINDIR
+   exit $?
+fi
+
+# ------------------------------------------------------------------------------------
+#
+# Check Netzwerk, sonst Abbruch
+#
+
+if [ -z "$(nmcli -g NAME c show --active)" ]; then
+   
+   zenity --error --text="Kein Netzwerk vorhanden; breche hier ab"
+   exit 2
+
+fi
+
+# ------------------------------------------------------------------------------------
+#
+# Jetzt erst die Funktionen 
+#
+PATH=$PATH:$(dirname $0)
+
+function logline { echo " - $@ " ; }
+function striche { echo " ----------------------------------------------- " ; }
+function titel { echo " "; striche ; logline "$@" ; striche ; echo " "; }
+
+titel "starte update der Pakete"
+
+apt update
+apt-get dist-upgrade -y 
+apt autoremove -y
+
+# ------------------------------------------------------------------------------------
+#
+# cleanup alternatives
+#
+
+titel "cleanup alternatives"
+
+for l in $(ls /etc/alternatives | grep -v ".gz" )
+do
+    update-alternatives --auto $l 
+done
+
+# ------------------------------------------------------------------------------------
+#
+# Install snaps
+#
+
+titel "Install snaps"
+
+cd $BINDIR/snaps
+
+# set arrays with all available snaps
+# mapfile -d '' SNAP_ASSERTS_ARR < <(find . -name "*.assert" -print0)
+# mapfile -d '' SNAPS_ARR < <(find . -name "*.snap" -print0)
+
+vorabliste="core core18 gnome-3-28-1804 cups"
+
+for snap2install in $vorabliste $(ls -1 *.assert)
+do
+    snapname="$( basename "$snap2install" .assert )"
+    logline  "checking $snapname"
+    if ! snap list "$snapname" &> /dev/null
+    then   
+#
+# Hier kann evtl. spezielle Option für einen/mehrere snapnamen gesetzt werden
+#
+        options=""
+	logline  "snap ack & install $snapname $options"
+	snap ack     "$snapname".assert
+	snap install "$snapname".snap $options
+    fi
+done
+
+
+echo ""
+snap list
+echo ""
+
+# ------------------------------------------------------------------------------------
+#
+
+titel "Enter return to continue"
+
+read a
