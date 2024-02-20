@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2024-02-20
+### Change
+- All console output will be writen to a log file (/tmp/hey_alter_setup.log)
+
 ## 2023-10-28
 ### Change
 - Changed the background image to a more accessible one designed by Andreas Karnath
