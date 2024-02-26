@@ -19,7 +19,7 @@ fi
 if [[ ! -v CI_PIPELINE_IID ]]; then
 	export CI_PIPELINE_IID=localbuild
 fi
-DOWNLOAD_URL="https://releases.ubuntu.com/22.04/ubuntu-22.04.3-desktop-amd64.iso"
+DOWNLOAD_URL="https://releases.ubuntu.com/22.04/ubuntu-22.04.4-desktop-amd64.iso"
 BUILD_DIR="$(pwd)/build"
 ISO_EXTRACTED_DIR="$BUILD_DIR/extracted-iso"
 ISO_MOUNT_DIR="$BUILD_DIR/extracted-iso"

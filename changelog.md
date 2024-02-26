@@ -2,8 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## 2024-02-20
+## 2024-02-26
 ### Change
+- Updated the base image to Ubuntu 22.04.4
 - All console output will be writen to a log file (/tmp/hey_alter_setup.log)
 
 ## 2023-10-28
