@@ -10,7 +10,9 @@ cp files/grubdefault "$SQUASHFS_EXTRACTED_DIR/etc/default/grub"
 
 log "Copying our files to the ISO"
 cp files/preseed/ubuntu_manualpart.seed "$ISO_EXTRACTED_DIR/preseed/"
-cat files/preseed/ubuntu_manualpart.seed files/preseed/autopartition.addition > "$ISO_EXTRACTED_DIR/preseed/ubuntu.seed"
+cat files/preseed/ubuntu_manualpart.seed files/preseed/wipe.addition files/preseed/autopartition.addition > "$ISO_EXTRACTED_DIR/preseed/ubuntu.seed"
+cat files/preseed/ubuntu_manualpart.seed files/preseed/select_bootdevice.addition files/preseed/autopartition.addition files/preseed/force_msdos.addition > "$ISO_EXTRACTED_DIR/preseed/ubuntu_force_msdos.seed"
+cat files/preseed/ubuntu_manualpart.seed files/preseed/select_bootdevice.addition files/preseed/autopartition.addition > "$ISO_EXTRACTED_DIR/preseed/ubuntu_nowipe.seed"
 rm -f "$ISO_EXTRACTED_DIR/boot/grub/grub.cfg"
 cp files/grub.cfg "$ISO_EXTRACTED_DIR/boot/grub/grub.cfg"
 

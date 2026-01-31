@@ -1,0 +1,1 @@
+d-i partman/early_command string /cdrom/setup/wipe-disks.sh

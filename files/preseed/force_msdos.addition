@@ -1,0 +1,8 @@
+### Partitioning
+# https://serverfault.com/questions/953322/preseed-automatic-partitioning
+d-i partman-basicfilesystems/choose_label string msdos
+d-i partman-basicfilesystems/default_label string msdos
+d-i partman-partitioning/choose_label string msdos
+d-i partman-partitioning/default_label string msdos
+d-i partman/choose_label string msdos
+d-i partman/default_label string msdos
